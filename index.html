@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic Photobook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+/* THE SETUP */
+* {
+  box-sizing: border-box;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+body {
+  background-color: #0B1120;
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 1fr;
+  margin: 0;
+  min-height: 100vh;
+  padding: 30px 0;
+  place-items: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background Design - Gradient Blobs */
+body::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: -10%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.08), transparent 60%);
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -20%;
+  right: -10%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(244, 63, 94, 0.08), transparent 60%);
+  z-index: 0;
+}
+
+.slide-container {
+  align-items: center;
+  background-color: #111827;
+  border-radius: 16px;
+  border: 1px solid #1F2937;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Kanit', sans-serif;
+  height: 1131px; /* เปลี่ยนเป็นความสูงแนวตั้ง (สัดส่วน A4) */
+  justify-content: center;
+  overflow: hidden;
+  padding: 60px;
+  position: relative;
+  width: 800px; /* เปลี่ยนเป็นความกว้างแนวตั้ง */
+  z-index: 1;
+}
+
+/* CONSISTENT TYPOGRAPHY */
+.slide-container h1,
+.slide-container h2,
+.slide-container h3 {
+  color: #F9FAFB;
+  font-weight: 700;
+  margin: 0;
+}
+
+.slide-container p,
+.slide-container li,
+.slide-container .subtitle {
+  color: #D1D5DB;
+  font-weight: 300;
+}
+
+.slide-container h1 {
+  font-size: 72px;
+  letter-spacing: -1px;
+}
+
+.slide-container .slide-title {
+  font-size: 44px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  text-align: left;
+  width: 100%;
+  border-bottom: 2px solid #1F2937;
+  padding-bottom: 15px;
+}
+
+.slide-container h3 {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.slide-container p,
+.slide-container li,
+.slide-container .subtitle {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* LAYOUTS */
+.title-layout {
+  text-align: center;
+}
+
+.title-layout h1 {
+  background: linear-gradient(to right, #22D3EE, #F43F5E);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.title-layout .subtitle {
+  font-size: 24px;
+  color: #9CA3AF;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* COVER LAYOUT SPECIFIC */
+.cover-layout {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* เพิ่มลวดลายตารางด้านหลังสุด */
+.cover-bg-grid {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  z-index: 0;
+}
+
+/* เพิ่มแสงออร่าสีฟ้าด้านหลัง */
+.cover-glow-1 {
+  position: absolute;
+  top: -20%; left: -20%;
+  width: 400px; height: 400px;
+  background: rgba(34, 211, 238, 0.25);
+  filter: blur(100px);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* เพิ่มแสงออร่าสีชมพูด้านหลัง */
+.cover-glow-2 {
+  position: absolute;
+  bottom: -20%; right: -20%;
+  width: 400px; height: 400px;
+  background: rgba(244, 63, 94, 0.25);
+  filter: blur(100px);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* กรอบกระจกใส (Glassmorphism) สร้างมิติ 3D */
+.cover-glass-card {
+  position: relative;
+  z-index: 10;
+  background: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+              0 0 30px rgba(34, 211, 238, 0.05);
+  border-radius: 24px;
+  padding: 60px 50px;
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cover-glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6),
+              0 0 40px rgba(34, 211, 238, 0.1);
+}
+
+.cover-accent {
+  color: #22D3EE;
+  font-size: 18px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+}
+
+.cover-layout h1 {
+  font-size: 84px; 
+  background: linear-gradient(to right, #22D3EE, #F43F5E);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  filter: drop-shadow(0px 4px 15px rgba(244, 63, 94, 0.3)); /* เงาตัวหนังสือให้ลอยขึ้น */
+}
+
+.cover-layout .subtitle {
+  font-size: 22px;
+  color: #E5E7EB;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.cover-divider {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(to right, #22D3EE, #F43F5E);
+  margin: 40px auto;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
+}
+
+.author-info {
+  font-size: 20px;
+  color: #D1D5DB;
+  margin-bottom: 40px;
+  line-height: 1.8;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 15px 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.author-name {
+  font-size: 32px;
+  font-weight: 600;
+  color: #F9FAFB;
+  margin-bottom: 5px;
+}
+
+.university-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.university-logo-wrapper {
+  position: relative;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.university-logo {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: screen; /* ทำให้พื้นหลังสีดำของโลโก้กลืนไปกับจอ */
+}
+
+.content-area {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  width: 100%;
+}
+
+.two-column {
+  display: flex;
+  flex-direction: column; /* เปลี่ยนให้เรียงบน-ล่าง */
+  gap: 30px;
+  width: 100%;
+}
+
+.image-wrapper {
+  border-radius: 12px;
+  height: 420px; /* ปรับความสูงรูปให้พอดีกับหน้ากระดาษแนวตั้ง */
+  max-width: 100%;
+  overflow: hidden;
+  width: 100%;
+  border: 1px solid #374151;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  background-color: #1F2937;
+}
+
+.image-wrapper img {
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* INFOGRAPHIC SETTINGS PANEL */
+.camera-settings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  background: #1F2937;
+  padding: 16px 20px;
+  border-radius: 10px;
+  border: 1px solid #374151;
+}
+
+.setting-item:nth-child(1) { border-left: 4px solid #A78BFA; }
+.setting-item:nth-child(2) { border-left: 4px solid #FBBF24; }
+.setting-item:nth-child(3) { border-left: 4px solid #22D3EE; }
+.setting-item:nth-child(4) { border-left: 4px solid #F43F5E; }
+
+.setting-item .icon {
+  font-size: 26px;
+  width: 50px;
+  text-align: left;
+}
+
+.setting-item:nth-child(1) .icon { color: #A78BFA; }
+.setting-item:nth-child(2) .icon { color: #FBBF24; }
+.setting-item:nth-child(3) .icon { color: #22D3EE; }
+.setting-item:nth-child(4) .icon { color: #F43F5E; }
+
+.setting-text {
+  flex-grow: 1;
+}
+
+.setting-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.setting-header strong {
+  color: #F3F4F6;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.setting-header span {
+  color: #9CA3AF;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+}
+
+/* Specifically style the title text differently to blend Thai better */
+.setting-item:nth-child(1) .setting-header span {
+  font-family: 'Kanit', sans-serif;
+  color: #E5E7EB;
+}
+
+.info-bar {
+  width: 100%;
+  height: 6px;
+  background: #374151;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.info-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+.fill-title { background: #A78BFA; width: 100%; }
+.fill-iso { background: #FBBF24; }
+.fill-fstop { background: #22D3EE; }
+.fill-speed { background: #F43F5E; }
+
+/* BLEED IMAGE RIGHT LAYOUT */
+.slide-container.bleed-image-layout {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.slide-container.bleed-image-layout > .content-container {
+  padding: 50px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  order: 2; /* ย้ายข้อความมาไว้ด้านล่างของรูปภาพ */
+  flex-grow: 1;
+  width: 100%;
+}
+
+.slide-container.bleed-image-layout > .image-container {
+  height: 500px; /* กำหนดความสูงรูปภาพด้านบนตายตัว */
+  width: 100%;
+  background-color: #1F2937;
+  order: 1; /* ดึงรูปภาพขึ้นไปไว้ด้านบนสุด */
+  position: relative;
+}
+
+.slide-container.bleed-image-layout img.bleed-image-side {
+  border-radius: 0;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+}
+
+.bleed-text-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bleed-text-side p.desc {
+  color: #9CA3AF;
+  font-size: 18px;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.slide-container.bleed-image-layout .slide-title {
+  margin-bottom: 20px;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Q&A LAYOUT */
+.qa-layout {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  align-self: center;
+}
+
+.qa-layout h2 {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.qa-layout p {
+  font-size: 22px;
+  color: #9CA3AF;
+}
+
+/* EMPTY IMAGE PLACEHOLDER STYLES */
+img[src=""], img:not([src]) {
+    opacity: 0;
+}
+
+.image-wrapper {
+    position: relative;
+}
+
+.image-container, .image-wrapper {
+    position: relative; /* เพิ่มเพื่อให้กรอบเส้นประอ้างอิงตำแหน่งได้ถูกต้อง (แก้กรอบเบี้ยว) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Add decorative text for empty image spaces */
+.image-container::after, .image-wrapper::after {
+    content: '[ พื้นที่สำหรับใส่รูปภาพ ]';
+    position: absolute;
+    top: 50%; /* จัดกึ่งกลางแนวตั้งเป๊ะๆ */
+    left: 50%; /* จัดกึ่งกลางแนวนอนเป๊ะๆ */
+    transform: translate(-50%, -50%);
+    color: #4B5563;
+    font-size: 20px;
+    font-weight: 400;
+    pointer-events: none;
+    z-index: 0;
+    border: 2px dashed #374151;
+    width: calc(100% - 40px); /* เว้นระยะขอบเข้ามาด้านละ 20px อย่างสม่ำเสมอ */
+    height: calc(100% - 40px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* Ensure images sit above the placeholder text when added */
+img {
+    position: relative;
+    z-index: 1;
+}
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Cover (Title_Slide) -->
+<div class="slide-container" id="slide1">
+    <div class="cover-layout">
+        <!-- Background Elements for Dimension -->
+        <div class="cover-bg-grid"></div>
+        <div class="cover-glow-1"></div>
+        <div class="cover-glow-2"></div>
+        
+        <!-- Glassmorphism Card -->
+        <div class="cover-glass-card">
+            <div class="cover-accent">Photography Portfolio</div>
+            <h1>PHOTOBOOK</h1>
+            <p class="subtitle">สมุดภาพเทคนิคการถ่ายภาพ 19 หัวข้อ</p>
+            
+            <div class="cover-divider"></div>
+            
+            <div class="author-info">
+                <div class="author-name">นายสุทธินันท์ ชะนะ</div>
+                <div>รหัสนักศึกษา: 684505043</div>
+            </div>
+            
+            <div class="university-info">
+                <div class="university-logo-wrapper">
+                    <!-- หากอยู่ในหน้าพรีวิวแล้วรูปไม่ขึ้น จะถูกแทนที่ด้วยข้อความอัตโนมัติด้วยคำสั่ง onerror (แก้ไข Error Syntax แล้ว) -->
+                    <img src="image_e0adbd.jpg" alt="Songkhla Rajabhat University Logo" class="university-logo" 
+                         onerror="this.outerHTML=`<div style='color:#9CA3AF; border:1px dashed #4B5563; padding:12px 24px; border-radius:8px; font-size:14px; background:rgba(0,0,0,0.4);'><i class='fa-solid fa-image' style='margin-right:8px;'></i> โลโก้จะแสดงเมื่อเปิดไฟล์ในเครื่องของคุณ</div>`">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 2: Topic 1 (Bleed_Image_Right) -->
+<div class="slide-container bleed-image-layout" id="slide2">
+    <div class="content-container">
+        <h2 class="slide-title">#01 เทคนิคการถ่ายภาพวิว ทิวทัศน์</h2>
+        <div class="content-area">
+            <div class="bleed-text-side">
+                <p class="desc">เก็บบันทึกความยิ่งใหญ่ของธรรมชาติ ด้วยการใช้รูรับแสงแคบเพื่อสร้างระยะชัดลึกและดึงรายละเอียดที่คมชัดตั้งแต่ฉากหน้าจรดฉากหลัง</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>กว้างไกลสุดสายตา</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>100</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 10%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/11</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 70%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/125s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 40%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="image-container">
+        <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+        <img class="bleed-image-side" src="" alt="">
+    </div>
+</div>
+
+<!-- Slide 3: Topic 2 (Two_Column) -->
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">#02 เทคนิคการถ่ายภาพน้ำตก</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="image-wrapper">
+                    <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div>
+                <p class="desc">สร้างเอฟเฟกต์ฟุ้งละมุนชวนฝันให้กับการเคลื่อนไหวของสายน้ำ ด้วยการตั้งกล้องบนขาตั้งและเปิดหน้ากล้องให้นานขึ้น</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>สายน้ำนุ่มนวล</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>50</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 5%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/16</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 90%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>2s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 10%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: Topic 3 (Bleed_Image_Right) -->
+<div class="slide-container bleed-image-layout" id="slide4">
+    <div class="content-container">
+        <h2 class="slide-title">#03 เทคนิคการถ่ายภาพไฟตอนกลางคืน (ชัตเตอร์ B)</h2>
+        <div class="content-area">
+            <div class="bleed-text-side">
+                <p class="desc">บันทึกเส้นสายของแสงไฟหน้ารถบนท้องถนน หรือการวาดภาพด้วยแสง (Light Painting) ด้วยการใช้โหมดชัตเตอร์แบบ Bulb</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>เส้นสายแห่งแสง</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>100</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 10%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/8</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 60%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>Bulb (30s)</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 5%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="image-container">
+        <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+        <img class="bleed-image-side" src="" alt="">
+    </div>
+</div>
+
+<!-- Slide 5: Topic 4 (Two_Column) -->
+<div class="slide-container" id="slide5">
+    <h2 class="slide-title">#04 เทคนิคการถ่ายภาพดอกไม้ หรือ แมลง Macro</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="image-wrapper">
+                    <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div>
+                <p class="desc">เปิดเผยโลกใบจิ๋วที่มองไม่เห็นด้วยตาเปล่า โดยการเข้าใกล้ตัวแบบให้มากที่สุด และจัดการความชัดลึกอย่างประณีต</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>จักรวาลใบเล็ก</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>400</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 35%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/16</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 90%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/200s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 50%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 6: Topic 5 (Bleed_Image_Right) -->
+<div class="slide-container bleed-image-layout" id="slide6">
+    <div class="content-container">
+        <h2 class="slide-title">#05 เทคนิคกีฬา Stop Action</h2>
+        <div class="content-area">
+            <div class="bleed-text-side">
+                <p class="desc">ดันความไวแสงและใช้ความเร็วชัตเตอร์ที่สูงปรี๊ด เพื่อแช่แข็งทุกแอ็กชันสำคัญของการแข่งขันให้อยู่นิ่งสนิท</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>หยุดเวลา</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>800</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 60%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/2.8</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 20%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/2000s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 95%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="image-container">
+        <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+        <img class="bleed-image-side" src="" alt="">
+    </div>
+</div>
+
+<!-- Slide 7: Topic 6 (Two_Column) -->
+<div class="slide-container" id="slide7">
+    <h2 class="slide-title">#06 เทคนิคการถ่ายภาพสถาปัตยกรรม</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="image-wrapper">
+                    <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div>
+                <p class="desc">ค้นหาลวดลายเรขาคณิต โครงสร้างอันสมมาตร และการสะท้อนแสงของอาคารสถานที่ทั้งในอดีตและปัจจุบัน</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>โครงสร้างแห่งเมือง</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>100</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 10%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/8</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 60%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/500s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 70%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 8: Topic 7 (Bleed_Image_Right) -->
+<div class="slide-container bleed-image-layout" id="slide8">
+    <div class="content-container">
+        <h2 class="slide-title">#07 เทคนิคการถ่ายภาพย้อนแสง Silhouette</h2>
+        <div class="content-area">
+            <div class="bleed-text-side">
+                <p class="desc">วัดแสงที่ฉากหลังเพื่อให้ตัวแบบด้านหน้าสูญเสียรายละเอียดและกลายเป็นเงาดำที่เน้นแค่เค้าโครงรูปร่างของซิลลูเอตต์</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>ความเปรียบต่าง</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>200</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 25%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/5.6</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 45%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/500s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 70%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="image-container">
+        <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+        <img class="bleed-image-side" src="" alt="">
+    </div>
+</div>
+
+<!-- Slide 9: Topic 8 (Two_Column) -->
+<div class="slide-container" id="slide9">
+    <h2 class="slide-title">#08 เทคนิคการถ่ายภาพข่าวเหตุการณ์</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="image-wrapper">
+                    <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div>
+                <p class="desc">บันทึกเรื่องราวและอารมณ์ในเสี้ยววินาทีสำคัญ เพื่อสื่อสารและรายงานเหตุการณ์ที่เกิดขึ้นจริงให้ผู้ชมได้รับรู้</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>บันทึกความจริง</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>1600</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 75%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/4</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 35%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/500s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 70%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 10: Topic 9 (Bleed_Image_Right) -->
+<div class="slide-container bleed-image-layout" id="slide10">
+    <div class="content-container">
+        <h2 class="slide-title">#09 เทคนิคการถ่ายภาพสารคดี 1 ชุด 5 ภาพ</h2>
+        <div class="content-area">
+            <div class="bleed-text-side">
+                <p class="desc">บอกเล่าเรื่องราวผ่านภาพถ่ายที่ต่อเนื่องกันเป็นชุดอย่างน้อย 5 ภาพ เพื่อสะท้อนวิถีชีวิตหรือประเด็นที่น่าสนใจให้สมบูรณ์</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>เรื่องราวผ่านภาพ</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>400</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 35%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/5.6</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 45%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/250s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 60%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="image-container">
+        <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+        <img class="bleed-image-side" src="" alt="">
+    </div>
+</div>
+
+<!-- Slide 11: Topic 10 (Two_Column) -->
+<div class="slide-container" id="slide11">
+    <h2 class="slide-title">#10 เทคนิคการถ่ายภาพแบบมีเส้นนำสายตา (ชัดลึก)</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="image-wrapper">
+                    <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div>
+                <p class="desc">ใช้เส้นสายในภาพไม่ว่าจะเป็นถนน สะพาน หรือกำแพง นำสายตาผู้ชมพุ่งตรงเข้าไปสู่จุดสนใจหลัก ด้วยระยะชัดลึกที่ทั่วถึง</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>นำทางสายตา</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>100</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 10%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/11</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 70%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/125s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 40%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 12: Topic 11 (Bleed_Image_Right) -->
+<div class="slide-container bleed-image-layout" id="slide12">
+    <div class="content-container">
+        <h2 class="slide-title">#11 เทคนิคการถ่ายภาพแบบมี foreground</h2>
+        <div class="content-area">
+            <div class="bleed-text-side">
+                <p class="desc">ใส่ฉากหน้าเพื่อสร้างความตื้นลึก มิติภาพ และจัดกรอบความสนใจให้เลเยอร์ของภาพดูน่าค้นหามากยิ่งขึ้น</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>มิติความลึก</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>200</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 25%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/8</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 60%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/250s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 60%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="image-container">
+        <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+        <img class="bleed-image-side" src="" alt="">
+    </div>
+</div>
+
+<!-- Slide 13: Topic 12 (Two_Column) -->
+<div class="slide-container" id="slide13">
+    <h2 class="slide-title">#12 เทคนิคการถ่ายภาพแฟชั่น (ภาพบุคคล) outdoor</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="image-wrapper">
+                    <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div>
+                <p class="desc">ผสมผสานตัวแบบเข้ากับสภาพแวดล้อมภายนอก โดยใช้แสงธรรมชาติหรือแฟลชเสริมเพื่อสร้างความโดดเด่นให้กับเครื่องแต่งกาย</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>เสน่ห์กลางแจ้ง</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>100</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 10%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/2.8</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 20%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/1000s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 85%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 14: Topic 13 (Bleed_Image_Right) -->
+<div class="slide-container bleed-image-layout" id="slide14">
+    <div class="content-container">
+        <h2 class="slide-title">#13 เทคนิคการถ่ายภาพชัดตื้น</h2>
+        <div class="content-area">
+            <div class="bleed-text-side">
+                <p class="desc">เปิดรูรับแสงกว้างสุดเพื่อทำลายระยะชัดลึก เบลอฉากหลังให้ละลาย และดึงตัวแบบให้โดดเด่นเด้งออกมาจากสภาพแวดล้อม</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>ละลายหลัง</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>100</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 10%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/1.4</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 5%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/2000s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 95%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="image-container">
+        <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+        <img class="bleed-image-side" src="" alt="">
+    </div>
+</div>
+
+<!-- Slide 15: Topic 14 (Two_Column) -->
+<div class="slide-container" id="slide15">
+    <h2 class="slide-title">#14 เทคนิคการถ่ายภาพอาหาร หรือ สินค้า</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="image-wrapper">
+                    <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div>
+                <p class="desc">ใช้แสงนุ่มนวลกระจายตัวเพื่อเน้นย้ำถึงพื้นผิว และขับสีสันที่จัดจ้านชวนลิ้มลองหรือความหรูหราของสินค้า</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>รสสัมผัสและดีไซน์</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>200</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 25%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/5.6</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 45%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/125s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 40%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 16: Topic 15 (Bleed_Image_Right) -->
+<div class="slide-container bleed-image-layout" id="slide16">
+    <div class="content-container">
+        <h2 class="slide-title">#15 เทคนิคการถ่ายภาพแบบ Frame หรือมีกรอบ</h2>
+        <div class="content-area">
+            <div class="bleed-text-side">
+                <p class="desc">ใช้กรอบธรรมชาติ กิ่งไม้ หรือช่องหน้าต่างสถาปัตยกรรม ล้อมรอบตัวแบบ เพื่อตีกรอบความสนใจของผู้ชมให้อยู่หมัด</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>กรอบซ้อนกรอบ</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>200</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 25%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/8</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 60%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/250s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 60%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="image-container">
+        <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+        <img class="bleed-image-side" src="" alt="">
+    </div>
+</div>
+
+<!-- Slide 17: Topic 16 (Two_Column) -->
+<div class="slide-container" id="slide17">
+    <h2 class="slide-title">#16 เทคนิคการถ่ายภาพการแบ่งเส้นขอบฟ้า 1:3 หรือ 2:3</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="image-wrapper">
+                    <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div>
+                <p class="desc">จัดวางเส้นขอบฟ้าตามกฎสามส่วน แบ่งสัดส่วนภาพเป็น 1:3 หรือ 2:3 เพื่อเน้นส่วนท้องฟ้าหรือผืนดินให้น่าสนใจเป็นพิเศษ</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>สัดส่วนฟ้าและดิน</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>100</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 10%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/8</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 60%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/500s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 70%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 18: Topic 17 - ไฟ 3 ดวง (Bleed_Image_Right) -->
+<div class="slide-container bleed-image-layout" id="slide18">
+    <div class="content-container">
+        <h2 class="slide-title">#17 เทคนิคการถ่ายภาพในสตูดิโอแบบไฟ 3 ดวง</h2>
+        <div class="content-area">
+            <div class="bleed-text-side">
+                <p class="desc">จัดแสงหลัก (Key), แสงลบเงา (Fill) และแสงแยกฉากหลัง (Backlight) เพื่อสร้างมิติและความสมบูรณ์แบบระดับมืออาชีพ</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>มิติแสงเงา</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>100</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 10%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/8</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 60%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/160s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 45%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="image-container">
+        <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+        <img class="bleed-image-side" src="" alt="">
+    </div>
+</div>
+
+<!-- Slide 19: Topic 18 - Candid (Two_Column) -->
+<div class="slide-container" id="slide19">
+    <h2 class="slide-title">#18 เทคนิคการถ่ายภาพแบบ Candid</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="image-wrapper">
+                    <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div>
+                <p class="desc">เก็บบันทึกอารมณ์และกิริยาที่เป็นธรรมชาติแบบสุดๆ โดยที่ตัวแบบไม่ทันรู้ตัวหรือไม่ได้โพสท่าเตรียมพร้อมมาก่อน</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>อารมณ์บริสุทธิ์</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>800</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 60%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/2.8</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 20%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/500s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 70%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 20: Topic 19 - กฏสามส่วน (Bleed_Image_Right) -->
+<div class="slide-container bleed-image-layout" id="slide20">
+    <div class="content-container">
+        <h2 class="slide-title">#19 ถ่ายภาพด้วยหลักการกฏสามส่วน</h2>
+        <div class="content-area">
+            <div class="bleed-text-side">
+                <p class="desc">จัดวางองค์ประกอบจุดสนใจหลักไว้บนจุดตัดของเส้นสมมติ 9 ช่อง เพื่อสร้างองค์ประกอบภาพที่สมดุลและดึงดูดสายตาที่สุด</p>
+                <div class="camera-settings-container">
+                    <div class="setting-item">
+                        <i class="fa-solid fa-tag icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ชื่อภาพ:</strong> <span>จุดตัดนำสายตา</span></div>
+                            <div class="info-bar"><div class="info-fill fill-title"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-sun icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>ISO:</strong> <span>200</span></div>
+                            <div class="info-bar"><div class="info-fill fill-iso" style="width: 25%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-camera icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>F-Stop:</strong> <span>f/5.6</span></div>
+                            <div class="info-bar"><div class="info-fill fill-fstop" style="width: 45%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <i class="fa-solid fa-stopwatch icon"></i>
+                        <div class="setting-text">
+                            <div class="setting-header"><strong>Speed Shutter:</strong> <span>1/500s</span></div>
+                            <div class="info-bar"><div class="info-fill fill-speed" style="width: 70%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="image-container">
+        <!-- ใส่ลิงก์รูปภาพในแอตทริบิวต์ src="" ด้านล่างนี้ -->
+        <img class="bleed-image-side" src="" alt="">
+    </div>
+</div>
+
+<!-- Slide 21: Q&A Layout (Ending) -->
+<div class="slide-container" id="slide21">
+    <div class="qa-layout">
+        <h2>สิ้นสุดการเดินทาง</h2>
+        <p>ขอบคุณที่ร่วมสำรวจสมุดภาพอินโฟกราฟิกของเรา</p>
+    </div>
+</div>
+
+</body>
+</html>
